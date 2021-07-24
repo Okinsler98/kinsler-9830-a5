@@ -44,7 +44,7 @@ class GuiController {
     editItem()
     removeItem()\n
 
-    saveInventoryCSV(fileName String)
+    saveInventoryTSV(fileName String)
     saveInventoryHTML(fileName String)
     saveInventoryJSON(fileName String)
 }
@@ -59,7 +59,7 @@ class SearchItemWindowController {
 }
 
 class FileManager {
-    exportCSV (fileName String, data String)
+    exportTSV (fileName String, data String)
     exportJSON (fileName String, data String)
     exportHTML (fileName String, data String)
 
