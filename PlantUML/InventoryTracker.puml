@@ -1,0 +1,83 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+openjfx.org.Application <|-- InventoryTracker
+InventoryTracker -- GuiManager
+
+GuiManager -- GuiController
+GuiManager -- AddItemWindowController
+GuiManager -- EditItemWindowController
+GuiManager -- SearchItemWindowController
+
+GuiController o-- InventoryList
+AddItemWindowController o-- InventoryList
+EditItemWindowController o-- InventoryList
+SearchItemWindowController o-- InventoryList
+
+GuiController o-- FileManager
+InventoryList *-- Item
+
+class InventoryTracker {
+    start()
+    main()
+}
+
+class GuiManager {
+    scenes Map<String Scene>
+    load()
+    getScene(String): Scene
+}
+
+class GuiController {
+    inventory: InventoryList
+    scenes: GuiManager
+    fileManager: FileManager
+
+    +GuiController(InventoryList, GuiManager)\n
+
+    addItemAction(EventHandler)
+    editItemAction(EventHandler)
+    removeItemAction(EventHandler)
+    saveInventoryAction(EventHandler)\n
+
+    addItem(name: String, serial: String, value: Double)
+    editItem()
+    removeItem()\n
+
+    saveInventoryCSV(fileName String)
+    saveInventoryHTML(fileName String)
+    saveInventoryJSON(fileName String)
+}
+
+class AddItemWindowController {
+}
+
+class EditItemWindowController {
+}
+
+class SearchItemWindowController {
+}
+
+class FileManager {
+    exportCSV (fileName String, data String)
+    exportJSON (fileName String, data String)
+    exportHTML (fileName String, data String)
+
+    importFile(fileName String)
+}
+
+class InventoryList {
+    ObservableList<Item>
+}
+
+class Item {
+    double value
+    string serialNumber
+    string name
+
+    editValue(newValue Double)
+    editSerialNumber(newSerial String)
+    editName(newName String)
+}
+
+@enduml
