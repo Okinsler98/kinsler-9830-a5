@@ -22,11 +22,11 @@ public class InventoryTracker extends Application{
         GuiManager controller = new GuiManager();
         loader.setController(controller);
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("NameHere")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("InventoryTracker.fxml")));
 
         Scene appScene = new Scene(root);
 
-        primaryStage.setTitle("TODO List");
+        primaryStage.setTitle("Inventory Tracker");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(appScene);
         primaryStage.show();

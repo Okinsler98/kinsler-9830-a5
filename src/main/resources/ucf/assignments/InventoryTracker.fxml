@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ucf.assignments.GuiManager"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #a6936f;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.GuiManager">
+   <children>
+      <MenuBar layoutX="66.0" layoutY="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="importButton" mnemonicParsing="false" text="Import" />
+                  <MenuItem fx:id="exportHTML" mnemonicParsing="false" text="Export HTML" />
+                  <MenuItem fx:id="exportTCV" mnemonicParsing="false" text="Export TCV" />
+                  <MenuItem fx:id="exportJSON" mnemonicParsing="false" text="Export JSON" />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+                  <MenuItem fx:id="newItemButton" mnemonicParsing="false" text="New" />
+              <MenuItem fx:id="editItemButton" mnemonicParsing="false" text="Edit" />
+                  <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+              <MenuItem fx:id="sortValueButton" mnemonicParsing="false" text="Value" />
+                  <MenuItem fx:id="sortSerialButton" mnemonicParsing="false" text="Serial Number" />
+                  <MenuItem fx:id="sortNameButton" mnemonicParsing="false" text="Name" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ListView layoutX="6.0" layoutY="25.0" prefHeight="350.0" prefWidth="326.0" style="-fx-background-color: #e3cfaa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="25.0" />
+      <AnchorPane fx:id="createItemWindow" disable="true" layoutX="40.0" layoutY="79.0" prefHeight="200.0" prefWidth="495.0" style="-fx-background-color: #ad9c7f;" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="75.0">
+         <children>
+            <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Create New Item" />
+              </menus>
+            </MenuBar>
+            <TextField fx:id="itemNameField" layoutX="14.0" layoutY="125.0" promptText="Item Name" />
+            <TextField fx:id="itemValueFIeld" layoutX="14.0" layoutY="88.0" promptText="Item Value" />
+            <TextField fx:id="itemSerialField" layoutX="14.0" layoutY="52.0" promptText="Item Serial Number" />
+            <Button fx:id="createItemButton" layoutX="332.0" layoutY="150.0" mnemonicParsing="false" text="Create" />
+            <Text fx:id="errorText" fill="RED" layoutX="225.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General Error Text" visible="false" wrappingWidth="172.13671875">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Button fx:id="cancelCreateButton" layoutX="416.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-color: #ff5e3b;" text="Cancel" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <TextField fx:id="itemSerialText" layoutX="348.0" layoutY="63.0" promptText="Item Serial Number" />
+      <TextField fx:id="itemValueText" layoutX="348.0" layoutY="106.0" promptText="Item Value" />
+      <TextField fx:id="itemNameText" layoutX="348.0" layoutY="150.0" promptText="Item Name" />
+      <Button fx:id="saveChangesButton" layoutX="348.0" layoutY="188.0" mnemonicParsing="false" text="Save" />
+      <TextField fx:id="directoryField" layoutX="348.0" layoutY="275.0" promptText="Directory" />
+      <TextField fx:id="fileNameField" layoutX="348.0" layoutY="313.0" promptText="File Name" />
+   </children>
 </AnchorPane>
