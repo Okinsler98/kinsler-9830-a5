@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -18,17 +19,13 @@
         <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem fx:id="importButton" mnemonicParsing="false" text="Import" />
-                  <MenuItem fx:id="exportHTML" mnemonicParsing="false" text="Export HTML" />
-                  <MenuItem fx:id="exportTCV" mnemonicParsing="false" text="Export TCV" />
-                  <MenuItem fx:id="exportJSON" mnemonicParsing="false" text="Export JSON" />
+                  <MenuItem fx:id="importExportButton" mnemonicParsing="false" onAction="#importExportWindowOpen" text="Import/Export" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-                  <MenuItem fx:id="newItemButton" mnemonicParsing="false" text="New" />
-              <MenuItem fx:id="editItemButton" mnemonicParsing="false" text="Edit" />
-                  <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="newItemButton" mnemonicParsing="false" onAction="#createWindowOpen" text="New" />
+                  <MenuItem fx:id="deleteItemButton" mnemonicParsing="false" onAction="#deleteButton" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="View">
@@ -40,7 +37,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ListView layoutX="6.0" layoutY="25.0" prefHeight="350.0" prefWidth="326.0" style="-fx-background-color: #e3cfaa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="25.0" />
+      <ListView fx:id="inventoryView" layoutX="6.0" layoutY="25.0" onEditStart="#itemSelection" onMouseClicked="#itemSelection" prefHeight="350.0" prefWidth="326.0" style="-fx-background-color: #e3cfaa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="25.0" />
+      <TextField fx:id="itemSerialText" layoutX="348.0" layoutY="63.0" promptText="Item Serial Number" />
+      <TextField fx:id="itemValueText" layoutX="348.0" layoutY="106.0" promptText="Item Value" />
+      <TextField fx:id="itemNameText" layoutX="348.0" layoutY="150.0" promptText="Item Name" />
+      <Button fx:id="saveChangesButton" layoutX="348.0" layoutY="188.0" mnemonicParsing="false" onAction="#saveButton" text="Save" />
       <AnchorPane fx:id="createItemWindow" disable="true" layoutX="40.0" layoutY="79.0" prefHeight="200.0" prefWidth="495.0" style="-fx-background-color: #ad9c7f;" visible="false" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="75.0">
          <children>
             <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -49,25 +50,43 @@
               </menus>
             </MenuBar>
             <TextField fx:id="itemNameField" layoutX="14.0" layoutY="125.0" promptText="Item Name" />
-            <TextField fx:id="itemValueFIeld" layoutX="14.0" layoutY="88.0" promptText="Item Value" />
+            <TextField fx:id="itemValueField" layoutX="14.0" layoutY="88.0" promptText="Item Value" />
             <TextField fx:id="itemSerialField" layoutX="14.0" layoutY="52.0" promptText="Item Serial Number" />
-            <Button fx:id="createItemButton" layoutX="332.0" layoutY="150.0" mnemonicParsing="false" text="Create" />
+            <Button fx:id="createItemButton" layoutX="332.0" layoutY="150.0" mnemonicParsing="false" onAction="#createNewItem" text="Create" />
             <Text fx:id="errorText" fill="RED" layoutX="225.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General Error Text" visible="false" wrappingWidth="172.13671875">
                <font>
                   <Font size="21.0" />
                </font>
             </Text>
-            <Button fx:id="cancelCreateButton" layoutX="416.0" layoutY="150.0" mnemonicParsing="false" style="-fx-background-color: #ff5e3b;" text="Cancel" />
+            <Button fx:id="cancelCreateButton" layoutX="416.0" layoutY="150.0" mnemonicParsing="false" onAction="#createWindowClose" style="-fx-background-color: #ff5e3b;" text="Cancel" />
          </children>
          <effect>
             <DropShadow />
          </effect>
       </AnchorPane>
-      <TextField fx:id="itemSerialText" layoutX="348.0" layoutY="63.0" promptText="Item Serial Number" />
-      <TextField fx:id="itemValueText" layoutX="348.0" layoutY="106.0" promptText="Item Value" />
-      <TextField fx:id="itemNameText" layoutX="348.0" layoutY="150.0" promptText="Item Name" />
-      <Button fx:id="saveChangesButton" layoutX="348.0" layoutY="188.0" mnemonicParsing="false" text="Save" />
-      <TextField fx:id="directoryField" layoutX="348.0" layoutY="275.0" promptText="Directory" />
-      <TextField fx:id="fileNameField" layoutX="348.0" layoutY="313.0" promptText="File Name" />
+      <AnchorPane fx:id="importExportWindow" disable="true" layoutX="50.0" layoutY="89.0" prefHeight="200.0" prefWidth="495.0" style="-fx-background-color: #ad9c7f;" visible="false">
+         <children>
+            <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Import/Export" />
+               </menus>
+            </MenuBar>
+            <TextField fx:id="fileNameField" layoutX="51.0" layoutY="87.0" promptText="File Name" />
+            <TextField fx:id="directoryField" layoutX="51.0" layoutY="51.0" promptText="Directory" />
+            <Button fx:id="importButton" layoutX="51.0" layoutY="138.0" mnemonicParsing="false" text="Import" />
+            <Button fx:id="exportButton" layoutX="150.0" layoutY="138.0" mnemonicParsing="false" text="Export" />
+            <MenuButton fx:id="fileTypeDrop" layoutX="239.0" layoutY="75.0" mnemonicParsing="false" text="File Type">
+              <items>
+                <MenuItem fx:id="selectJSON" mnemonicParsing="false" text="Json" />
+                <MenuItem fx:id="selectHTML" mnemonicParsing="false" text="HTML" />
+                  <MenuItem fx:id="selectTCV" mnemonicParsing="false" text="TCV" />
+              </items>
+            </MenuButton>
+            <Button fx:id="cancelButton1" layoutX="402.0" layoutY="138.0" mnemonicParsing="false" onAction="#importExportWindowClose" text="Cancel" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
    </children>
 </AnchorPane>

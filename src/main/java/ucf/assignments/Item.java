@@ -8,7 +8,7 @@ package ucf.assignments;
 public class Item {
     String name;
     String serialNumber;
-    Double value;
+    String value;
 
     public void editName(String newName){
         name = newName;
@@ -18,7 +18,7 @@ public class Item {
         serialNumber = newSerialNumber;
     }
 
-    public void editValue(Double newValue){
+    public void editValue(String newValue){
         value = newValue;
     }
 }
