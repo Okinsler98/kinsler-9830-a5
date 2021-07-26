@@ -21,4 +21,16 @@ public class Item {
     public void editValue(String newValue){
         value = newValue;
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getSerialNumber(){
+        return serialNumber;
+    }
+
+    public String getValue(){
+        return value;
+    }
 }

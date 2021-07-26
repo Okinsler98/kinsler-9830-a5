@@ -4,17 +4,9 @@
 openjfx.org.Application <|-- InventoryTracker
 InventoryTracker -- GuiManager
 
-GuiManager -- GuiController
-GuiManager -- AddItemWindowController
-GuiManager -- EditItemWindowController
-GuiManager -- SearchItemWindowController
+GuiManager o-- InventoryList
 
-GuiController o-- InventoryList
-AddItemWindowController o-- InventoryList
-EditItemWindowController o-- InventoryList
-SearchItemWindowController o-- InventoryList
-
-GuiController o-- FileManager
+GuiManager o-- FileManager
 InventoryList *-- Item
 
 class InventoryTracker {
@@ -23,12 +15,6 @@ class InventoryTracker {
 }
 
 class GuiManager {
-    scenes Map<String Scene>
-    load()
-    getScene(String): Scene
-}
-
-class GuiController {
     inventory: InventoryList
     scenes: GuiManager
     fileManager: FileManager
@@ -49,25 +35,28 @@ class GuiController {
     saveInventoryJSON(fileName String)
 }
 
-class AddItemWindowController {
-}
-
-class EditItemWindowController {
-}
-
-class SearchItemWindowController {
-}
-
 class FileManager {
-    exportTSV (fileName String, data String)
-    exportJSON (fileName String, data String)
-    exportHTML (fileName String, data String)
-
-    importFile(fileName String)
+    exportFile (fileName String, data String)
+    importFile (fileName String)
 }
 
 class InventoryList {
     ObservableList<Item>
+    createItem()
+    checkSerial()
+    checkValue()
+    addItem()
+    deleteItem()
+    clearList()
+    sortList()
+    editItemName()
+    editSerialNumber()
+    editItemValue()
+    exportListJSON()
+    exportListTCV()
+    exportListHTML()
+    importList()
+    tcvImport()
 }
 
 class Item {
@@ -78,6 +67,10 @@ class Item {
     editValue(newValue Double)
     editSerialNumber(newSerial String)
     editName(newName String)
+
+    getName()
+    getSerialNumber()
+    getValue()
 }
 
 @enduml

@@ -8,10 +8,13 @@ package ucf.assignments;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import javafx.scene.control.CheckBox;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class InventoryList {
     ArrayList<Item> itemList = new ArrayList();
@@ -67,6 +70,28 @@ public class InventoryList {
         itemList.remove(itemNumber);
     }
 
+    public void clearList(){
+        for (int i = 0; i < itemList.size(); i++) {
+            itemList.remove(i);
+        }
+    }
+
+    public void sortList(int sortType){
+        Collections.sort(itemList, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                switch (sortType){
+                    case 0 :
+                        return o1.getName().compareTo(o2.getName());
+                    case 1 :
+                        return o1.getSerialNumber().compareTo(o2.getSerialNumber());
+                    default:
+                        return o1.getValue().compareTo(o2.getValue());
+                }
+            }
+        });
+    }
+
     public void editItemName(int itemNumber, String newName){
         itemList.get(itemNumber).editName(newName);
     }
@@ -98,10 +123,12 @@ public class InventoryList {
         fManager.exportFile(directory + "\\" + fileName + ".json", output);
     }
 
-    public void exportListTSV(String directory, String fileName) throws IOException {
-        String output = new String();
+    public void exportListTCV(String directory, String fileName) throws IOException {
+        String output = "Value\tSerial Number\tName";
 
-        //Print items to output String in tabular format
+        for (int i = 0; i < itemList.size(); i++){
+            output += "\n$" + itemList.get(i).value + "\t" + itemList.get(i).serialNumber + "\t" + itemList.get(i).name;
+        }
 
         fManager.exportFile(directory + "\\" + fileName + ".txt", output);
     }
@@ -116,24 +143,48 @@ public class InventoryList {
 
     public void importList (String directory, String fileName, int fileType) throws IOException {
         //Filetypes 0 - JSON, 1 - HTML, 2 - TCV
-        String output = new String();
-
-        output = fManager.importFile(directory + "\\" + fileName);
+        String input = fManager.importFile(directory + "\\" + fileName);
 
         switch (fileType) {
             case 0 :
-                Item item = new Item();
-                JsonArray array = JsonParser.parseString(output).getAsJsonArray();
-                for (int i = 0; i < array.size(); i++){
-                    itemList.set(i, gson.fromJson(array.get(i), Item.class));
+                JsonArray arrayInput = JsonParser.parseString(input).getAsJsonArray();
+                for (int i = 0; i < arrayInput.size(); i++){
+                    itemList.set(i, gson.fromJson(arrayInput.get(i), Item.class));
                 }
                 break;
             case 1 :
                 //Import HTML File
                 break;
             case 2  :
-                //Import TCV File
+                tcvImport(input);
                 break;
+        }
+    }
+
+    public void tcvImport(String input){
+        int arrayCounter = 0;
+        int variableCounter = 0;
+        for (int i = 0; i < input.length(); i++){
+            if (input.charAt(i) == '\t'){
+                variableCounter++;
+                if (variableCounter > 3){
+                    variableCounter = 0;
+                    arrayCounter++;
+                }
+            }
+            switch (variableCounter){
+                case 0 :
+                    if (input.charAt(i) != '$'){
+                        itemList.get(arrayCounter).value += input.charAt(i);
+                    }
+                    break;
+                case 1 :
+                    itemList.get(arrayCounter).serialNumber += input.charAt(i);
+                    break;
+                case 2 :
+                    itemList.get(arrayCounter).name += input.charAt(i);
+                    break;
+            }
         }
     }
 }

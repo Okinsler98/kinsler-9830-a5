@@ -6,10 +6,7 @@
 package ucf.assignments;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
@@ -36,6 +33,10 @@ public class GuiManager {
 
     @FXML private AnchorPane createItemWindow;
     @FXML private AnchorPane importExportWindow;
+
+    @FXML private CheckMenuItem JsonField;
+    @FXML private CheckMenuItem HTMLField;
+    @FXML private CheckMenuItem TCVField;
 
     private int itemSelected = 0;
 
@@ -102,6 +103,72 @@ public class GuiManager {
         iManager.editSerialNumber(itemSelected, itemSerialText.getText());
         iManager.editItemValue(itemSelected, itemValueText.getText());
         iManager.editItemName(itemSelected, itemNameText.getText());
+        refreshList();
+    }
+
+    @FXML
+    public void exportButtonAction() throws IOException {
+        if (JsonField.isSelected()){
+            iManager.exportListJSON(directoryField.getText(), fileNameField.getText());
+        }
+        if (HTMLField.isSelected()){
+            iManager.exportListHTML(directoryField.getText(), fileNameField.getText());
+        }
+        if (TCVField.isSelected()){
+            iManager.exportListTCV(directoryField.getText(), fileNameField.getText());
+        }
+    }
+
+    @FXML
+    public void importButtonAction() throws IOException {
+        iManager.clearList();
+
+        if (JsonField.isSelected()){
+            iManager.importList(directoryField.getText(), fileNameField.getText(), 0);
+        }
+        if (HTMLField.isSelected()){
+            iManager.importList(directoryField.getText(), fileNameField.getText(), 1);
+        }
+        if (TCVField.isSelected()){
+            iManager.importList(directoryField.getText(), fileNameField.getText(), 2);
+        }
+
+        refreshList();
+    }
+
+    @FXML
+    public void checkboxJson() {
+        HTMLField.setSelected(false);
+        TCVField.setSelected(false);
+    }
+
+    @FXML
+    public void checkboxHTML() {
+        JsonField.setSelected(false);
+        TCVField.setSelected(false);
+    }
+
+    @FXML
+    public void checkboxTCV() {
+        HTMLField.setSelected(false);
+        JsonField.setSelected(false);
+    }
+
+    @FXML
+    public void sortName() {
+        iManager.sortList(0);
+        refreshList();
+    }
+
+    @FXML
+    public void sortSerialNumber() {
+        iManager.sortList(1);
+        refreshList();
+    }
+
+    @FXML
+    public void sortValue() {
+        iManager.sortList(2);
         refreshList();
     }
 }

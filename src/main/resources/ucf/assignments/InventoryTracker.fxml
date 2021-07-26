@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -30,9 +31,9 @@
           </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
-              <MenuItem fx:id="sortValueButton" mnemonicParsing="false" text="Value" />
-                  <MenuItem fx:id="sortSerialButton" mnemonicParsing="false" text="Serial Number" />
-                  <MenuItem fx:id="sortNameButton" mnemonicParsing="false" text="Name" />
+              <MenuItem fx:id="sortValueButton" mnemonicParsing="false" onAction="#sortValue" text="Value" />
+                  <MenuItem fx:id="sortSerialButton" mnemonicParsing="false" onAction="#sortSerialNumber" text="Serial Number" />
+                  <MenuItem fx:id="sortNameButton" mnemonicParsing="false" onAction="#sortName" text="Name" />
             </items>
           </Menu>
         </menus>
@@ -73,13 +74,13 @@
             </MenuBar>
             <TextField fx:id="fileNameField" layoutX="51.0" layoutY="87.0" promptText="File Name" />
             <TextField fx:id="directoryField" layoutX="51.0" layoutY="51.0" promptText="Directory" />
-            <Button fx:id="importButton" layoutX="51.0" layoutY="138.0" mnemonicParsing="false" text="Import" />
-            <Button fx:id="exportButton" layoutX="150.0" layoutY="138.0" mnemonicParsing="false" text="Export" />
+            <Button fx:id="importButton" layoutX="51.0" layoutY="138.0" mnemonicParsing="false" onAction="#importButtonAction" text="Import" />
+            <Button fx:id="exportButton" layoutX="150.0" layoutY="138.0" mnemonicParsing="false" onAction="#exportButtonAction" text="Export" />
             <MenuButton fx:id="fileTypeDrop" layoutX="239.0" layoutY="75.0" mnemonicParsing="false" text="File Type">
               <items>
-                <MenuItem fx:id="selectJSON" mnemonicParsing="false" text="Json" />
-                <MenuItem fx:id="selectHTML" mnemonicParsing="false" text="HTML" />
-                  <MenuItem fx:id="selectTCV" mnemonicParsing="false" text="TCV" />
+                  <CheckMenuItem fx:id="JsonField" mnemonicParsing="false" onAction="#checkboxJson" text="Json" />
+                  <CheckMenuItem fx:id="HTMLField" mnemonicParsing="false" onAction="#checkboxHTML" text="HTML" />
+                  <CheckMenuItem fx:id="TCVField" mnemonicParsing="false" onAction="#checkboxTCV" text="TCV" />
               </items>
             </MenuButton>
             <Button fx:id="cancelButton1" layoutX="402.0" layoutY="138.0" mnemonicParsing="false" onAction="#importExportWindowClose" text="Cancel" />
